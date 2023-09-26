@@ -1,0 +1,67 @@
+<TooltipMDIconButton@MDIconButton+MDTooltip>
+<CardItem>
+    size_hint_y: None
+    height: "86dp"
+    padding: "4dp"
+    radius: 12
+
+    FitImage:
+        source: ""
+        radius: root.radius
+        size_hint_x: None
+        width: root.height
+
+    MDBoxLayout:
+        orientation: "vertical"
+        adaptive_height: True
+        spacing: "6dp"
+        padding: "12dp", 0, 0, 0
+        pos_hint: {"center_y": .5}
+
+        MDLabel:
+            id: title
+            text: "Title text"
+            font_style: "H5"
+            bold: True
+            adaptive_height: True
+
+        MDLabel:
+            id: dect
+            text: "Subtitle text"
+            theme_text_color: "Hint"
+            adaptive_height: True
+
+ScreenManager:
+    id: screen_manager
+    Screen:
+        name: "home"
+        MDBottomNavigation:
+            MDBottomNavigationItem:
+                name: 'screen 1'
+                text: 'Новости'
+                icon: 'newspaper-variant-multiple-outline'
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    spacing: dp(10)
+                    padding: dp(20)
+
+                    MDBoxLayout:
+                        adaptive_height: True
+                        id: man
+                        TooltipMDIconButton:
+                            tooltip_text: 'Поиск'
+                            icon: 'magnify'
+                            on_release: app.search_news()
+                        MDTextField:
+                            id: search_field2
+                            hint_text: 'Search icon'
+                        TooltipMDIconButton:
+                            tooltip_text: 'Войти'
+                            icon: 'exit-to-app'
+                            on_release: app.data()
+                    ScrollView:
+                        scroll_timeout : 150
+                        MDList:
+                            id: rv2
+                            padding: "12dp"
+                            spacing: "12dp"
