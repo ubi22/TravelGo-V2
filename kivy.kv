@@ -1,4 +1,5 @@
-<TooltipMDIconButton@MDIconButton+MDTooltip>
+<TooltipIcon@MDIconButton+MDTooltip>
+
 <CardItem>
     size_hint_y: None
     height: "86dp"
@@ -33,13 +34,18 @@
 
 ScreenManager:
     id: screen_manager
+#    Screen:
+#        FitImage:
+#            source: "D:/TravelGo-V2/Style/Фон.png"
     Screen:
         name: "home"
         MDBottomNavigation:
+            text_color_active:  1, 1, 0.99, 1
             MDBottomNavigationItem:
                 name: 'screen 1'
-                text: 'Новости'
-                icon: 'newspaper-variant-multiple-outline'
+                font_name: "D:/TravelGo-V2/Style/Kanit-Bold.ttf"
+                text: 'Главная'
+                icon: 'home'
                 MDBoxLayout:
                     orientation: 'vertical'
                     spacing: dp(10)
@@ -48,17 +54,197 @@ ScreenManager:
                     MDBoxLayout:
                         adaptive_height: True
                         id: man
-                        TooltipMDIconButton:
+                        TooltipIcon:
                             tooltip_text: 'Поиск'
                             icon: 'magnify'
                             on_release: app.search_news()
                         MDTextField:
                             id: search_field2
                             hint_text: 'Search icon'
-                        TooltipMDIconButton:
+                        TooltipIcon:
                             tooltip_text: 'Войти'
                             icon: 'exit-to-app'
-                            on_release: app.data()
+                            on_release: app.screen("registr")
+                    ScrollView:
+                        scroll_timeout : 150
+                        MDList:
+                            id: rv2
+                            padding: "12dp"
+                            spacing: "12dp"
+
+    Screen:
+        name: "registr"
+        MDCard:
+            size_hint: .8, .88
+            pos_hint: {"center_x": .5, "center_y": .5}
+            elevation: 6
+            orientation: "vertical"
+            MDFloatLayout:
+                Label:
+                    font_name: 'text'
+                    text: "Привет, \nвойди в аккаунт"
+                    font_size: "45sp"
+                    pos_hint: {"center_x": .45, "center_y": .85}
+                MDTextField:
+                    id: login
+                    mode: "rectangle"
+                    size_hint: .85, .09
+                    width: "400dp"
+                    hint_text: "Логин"
+                    text_color_active: 1,1,1,1
+                    pos_hint: {"center_x": .5, "center_y": .62}
+                MDTextField:
+                    id: password
+                    mode: "rectangle"
+                    size_hint: .85, .09
+                    width: "400dp"
+                    hint_text: "Пароль"
+                    pos_hint: {"center_x": .5, "center_y": .48}
+                MDRaisedButton:
+                    text: " Войти "
+                    font_name: 'text'
+                    text_size: "39sp"
+                    pos_hint: {"center_x": .5, "center_y": .315}
+                    on_release:
+                        app.log_in()
+                MDFlatButton:
+                    text: "Еще нет,"
+                    font_name: 'text_double'
+                    font_size: "25sp"
+                    pos_hint: {"center_x": .38, "center_y": .135}
+                MDFlatButton:
+                    text: "Создай"
+                    font_size: "25sp"
+                    pos_hint: {"center_x": .65, "center_y": .135}
+                    on_release:
+                        app.data(1)
+        MDCard:
+            id: singuser
+            size_hint: .79, .87
+            pos_hint: {"center_x": 1.5, "center_y": .5}
+            elevation: 6
+            MDFloatLayout:
+                MDLabel:
+                    text: "Создай аккаунт!"
+                    font_size: "45sp"
+                    font_name: 'text'
+                    pos_hint: {"center_x": .56, "center_y": .85}
+                MDTextField:
+                    id: log
+                    mode: "rectangle"
+                    size_hint: .85, .09
+                    width: "400dp"
+                    hint_text: 'Логин'
+                    pos_hint: {"center_x": .5, "center_y": .73}
+                MDTextField:
+                    id: pase
+                    mode: "rectangle"
+                    size_hint: .85, .09
+                    width: "400dp"
+                    hint_text: "Пароль"
+                    pos_hint: {"center_x": .5, "center_y": .63}
+                MDTextField:
+                    id: name
+                    mode: "rectangle"
+                    size_hint: .85, .09
+                    width: "400dp"
+                    hint_text: "ФИО"
+                    pos_hint: {"center_x": .5, "center_y": .53}
+                MDTextField:
+                    text_font_name: "text"
+                    id: email
+                    mode: "rectangle"
+                    size_hint: .85, .09
+                    width: "400dp"
+                    hint_text: "Почта"
+                    pos_hint: {"center_x": .5, "center_y": .43}
+                MDRaisedButton:
+                    font_name: 'text'
+                    text_size: "15sp"
+                    text: "Создать"
+                    pos_hint: {"center_x": .5, "center_y": .25}
+                    on_release:
+                        app.registration(False)
+                MDFlatButton:
+                    font_name: 'text_double'
+                    text: "Вы наш партнер?"
+                    font_size: "20sp"
+                    pos_hint: {"center_x": .5, "center_y": .12}
+                    on_release:
+                        app.data(2)
+
+
+        MDCard:
+            id: singadmin
+            size_hint: .79, .87
+            pos_hint: {"center_x": -0.5, "center_y": .5}
+            elevation: 6
+            MDFloatLayout:
+                MDLabel:
+                    text: "Создай аккаунт\nпартнер!"
+                    font_size: "45sp"
+                    font_name: 'text'
+                    pos_hint: {"center_x": .56, "center_y": .85}
+                MDTextField:
+                    id: logincom
+                    mode: "rectangle"
+                    size_hint: .85, .09
+                    width: "400dp"
+                    hint_text: 'Логин'
+                    pos_hint: {"center_x": .5, "center_y": .68}
+                MDTextField:
+                    id: pasecom
+                    mode: "rectangle"
+                    size_hint: .85, .09
+                    width: "400dp"
+                    hint_text: "Пароль"
+                    pos_hint: {"center_x": .5, "center_y": .58}
+                MDTextField:
+                    id: namecom
+                    mode: "rectangle"
+                    size_hint: .85, .09
+                    width: "400dp"
+                    hint_text: "Название компании"
+                    pos_hint: {"center_x": .5, "center_y": .48}
+                MDRaisedButton:
+                    font_name: 'text'
+                    text_size: "15sp"
+                    text: "Создать"
+                    pos_hint: {"center_x": .5, "center_y": .25}
+                    on_release:
+                        app.registration(True)
+
+    Screen:
+        name: "useradmin"
+
+    Screen:
+        name: "user"
+        MDBottomNavigation:
+            text_color_active:  1, 1, 0.99, 1
+            MDBottomNavigationItem:
+                name: 'screen 1'
+                font_name: "D:/TravelGo-V2/Style/Kanit-Bold.ttf"
+                text: 'Главная'
+                icon: 'home'
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    spacing: dp(10)
+                    padding: dp(20)
+
+                    MDBoxLayout:
+                        adaptive_height: True
+                        id: man
+                        TooltipIcon:
+                            tooltip_text: 'Поиск'
+                            icon: 'magnify'
+                            on_release: app.search_news()
+                        MDTextField:
+                            id: search_field2
+                            hint_text: 'Search icon'
+                        TooltipIcon:
+                            tooltip_text: 'Войти'
+                            icon: 'exit-to-app'
+                            on_release: app.screen("registr")
                     ScrollView:
                         scroll_timeout : 150
                         MDList:
