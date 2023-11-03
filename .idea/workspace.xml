@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a1939dd-abb3-4b74-b52b-b720e345abc7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Text.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/TravelGo-V2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TravelGo-V2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kivy.kv" beforeDir="false" afterPath="$PROJECT_DIR$/kivy.kv" afterDir="false" />

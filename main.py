@@ -1,108 +1,16 @@
-import sqlite3
-from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import StringProperty, ListProperty
-from kivymd.uix.floatlayout import MDFloatLayout
-from kivy.metrics import dp
-import requests
+
 import json
-from kivymd.uix.tab import MDTabsBase
-from kivymd.app import MDApp
-from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
-from kivymd.uix.selectioncontrol import MDCheckbox
-from kivymd.icon_definitions import md_icons
-from kivy.properties import StringProperty
-from kivymd.theming import ThemableBehavior
-from kivymd.uix.list import OneLineIconListItem, MDList
-from kivymd.uix.button import MDRaisedButton
-from kivymd.font_definitions import fonts
-from kivymd.icon_definitions import md_icons
-from kivymd.uix.card import MDCardSwipe
-import datetime
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.chip import MDChip
-from kivy.animation import Animation
-from kivy.factory import Factory
-from kivymd.uix.menu import MDDropdownMenu
-from kivy.clock import Clock
-from kivymd.uix.dialog import MDDialog
-from kivy.properties import StringProperty
-from kivy.uix.screenmanager import Screen
-from kivymd.icon_definitions import md_icons
-from kivymd.uix.list import OneLineListItem
-from kivymd.uix.datatables import MDDataTable
-from kivymd.uix.list import ThreeLineIconListItem
-from kivymd.uix.button import MDFlatButton
-import webbrowser
-from kivymd.uix.textfield import MDTextField
-from kivymd.uix.button import MDFloatingActionButton
-from kivymd.uix.button import MDRaisedButton
-from kivy.properties import ObjectProperty
-from kivy.uix.boxlayout import BoxLayout
-from kivymd.uix.filemanager import MDFileManager
-from kivymd.toast import toast
-from kivy.core.window import Window
-from kivy.core.window import Window
-import sqlite3
 import hashlib
-from kivy.lang import Builder
-from kivy.properties import StringProperty
-from kivy.uix.screenmanager import Screen
-from kivymd.uix.card import MDCard
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.fitimage import FitImage
 from kivymd.uix.label import MDLabel
-from kivymd.uix.card import MDSeparator
-from kivymd.uix.button import MDIconButton
-from kivy.lang import Builder
-from kivy.uix.modalview import ModalView
-from kivy.lang import Builder
-from kivymd.uix.list import MDList
-from kivymd import images_path
-from kivymd.uix.list import OneLineIconListItem
-from kivymd.app import MDApp
-from kivymd.uix.menu import MDDropdownMenu
-from kivymd.app import MDApp
 from kivymd.uix.card import MDCard
-from kivy.properties import ObjectProperty
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.floatlayout import FloatLayout
-from kivymd.toast import toast
 from kivy.animation import Animation
-from kivy.core.window import Window
-from kivy.uix.scrollview import ScrollView
-from kivy.lang import Builder
-from kivy.properties import StringProperty
 from kivymd.app import MDApp
-from kivymd.uix.relativelayout import MDRelativeLayout
-from kivymd.theming import ThemeManager
-from kivymd.app import MDApp
-from kivy.uix.screenmanager import Screen, ScreenManager
-from kivymd.uix.datatables import MDDataTable
-from kivy.metrics import dp
-from kivy.lang import Builder
-from kivy.metrics import dp
-from kivy.properties import StringProperty
-from kivymd.uix.fitimage import FitImage
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.list import OneLineIconListItem
-from kivymd.app import MDApp
-from kivymd.uix.menu import MDDropdownMenu
-from kivymd.uix.bottomsheet import MDGridBottomSheet
-from kivy.uix.anchorlayout import AnchorLayout
 from kivy.lang.builder import Builder
-from kivymd.uix.button import MDTextButton
-from kivymd.uix.menu import MDDropdownMenu
-from kivymd.uix.snackbar import Snackbar
-from kivy.factory import Factory
-from kivymd.uix.button import MDIconButton
-from bs4 import BeautifulSoup
 import requests
 import sqlite3
 from kivy.core.text import LabelBase
-import time
 from kivymd.toast import toast
-Window.size = (480, 800)
 API = '6c39b074-59ea-4ce3-8924-c1b26f5e9137'
 
 def md5sum(value):
@@ -124,24 +32,24 @@ with sqlite3.connect('database.db') as fut:
 
 class CardItem(MDCard):
     pass
-
+class MD3Card(MDCard):
+    '''Implements a material design v3 card.'''
 LabelBase.register(name='text',
-                      fn_regular='/TravelGo-V2/Style/ba.ttf')
+                      fn_regular='Style/ba.ttf')
 LabelBase.register(name='text_double',
-                      fn_regular='/TravelGo-V2/Style/Mikar.ttf')
+                      fn_regular='Style/Mikar.ttf')
 class TravelGO(MDApp):
+
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Indigo"
         self.theme_cls.material_style = "M3"
         return Builder.load_file("kivy.kv")
-
     def search_news(self):
-        a = self.root.ids
-        TEXT = f'{a.search_field2.text}, кафе'
+        self.root.ids.rv2.clear_widgets()
+        TEXT = f'{self.root.ids.search_field2.text}, кафе'
         # колличество запросов, то есть заведений которых код выдаст, максимум 50
         RESULTS = 10
-
         response = requests.get(
             f'https://search-maps.yandex.ru/v1/?apikey={API}&text={TEXT}&lang=ru_RU&results={RESULTS}')
         text = json.loads(response.text)
@@ -156,11 +64,55 @@ class TravelGO(MDApp):
             hours = i['properties']['CompanyMetaData']['Hours']['Availabilities']
             # print(name, '\n', clas, '\n', description, '\n', address, '\n', hours, '\n')
             content = CardItem()
-            content.ids.title.text = f"{name}"
-            content.ids.dect.text = f"{clas}"
-            print(content.ids.title.text)
+            self.root.ids.rv2.add_widget(
+                MD3Card
+                (
+                    MDBoxLayout(
+                        MDLabel(
+                            id="title",
+                            text=f"{name}",
+                            font_style="H5",
+                            bold=True,
+                            adaptive_height=True,
+                        ),
+                        MDLabel(
+                            id="title",
+                            text=f"{clas}",
+                            bold=True,
+                            adaptive_height=True,
+                        ),
+                        MDLabel(
+                            id="title",
+                            text=f"{description}",
+                            bold=True,
+                            adaptive_height=True,
+                        ),
+                        orientation="vertical",
+                        adaptive_height=True,
+                        spacing="6dp",
+                        padding="12dp",
+                        pos_hint=({"center_y": .5}),
+                    ),
 
-            a.rv2.add_widget(content)
+
+                        # MDLabel
+                        # id: dect
+                        # text: "Subtitle text"
+                        # theme_text_color: "Hint"
+                        # adaptive_height: True
+                    size_hint_y=None,
+                    height="86dp",
+                    padding="4dp",
+                    radius=12,
+
+
+                )
+
+
+
+            )
+
+            print("Ok")
     def registration(self, a=True):
         login = self.root.ids.log.text
         password = self.root.ids.pase.text
